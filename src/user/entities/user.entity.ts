@@ -13,7 +13,8 @@ export class User extends BaseEntity {
   phone: string;
   @Column({ nullable: true })
   address: string;
-  Role: Role;
+  @Column({nullable:true})
+  role: Role;
 }
 
 export enum Role {

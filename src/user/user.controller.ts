@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -15,6 +15,9 @@ export class UserController {
   @ApiBody(UserSwaggerSchema.createUserBody)
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
+    const userExists = this.userService.findByEmail(createUserDto.email);
+    if(userExists)
+      throw new HttpException('User already exists', 400);
     return this.userService.create(createUserDto);
   }
 
