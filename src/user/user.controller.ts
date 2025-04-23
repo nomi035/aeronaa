@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { UserSwaggerSchema } from './user.swagger-schema';
+import { JwtAuthGuard } from 'src/auth/guard';
 
 
 @Controller('user')
@@ -16,11 +17,13 @@ export class UserController {
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     const userExists = await this.userService.findByEmail(createUserDto.email);
-    console.log(userExists)
+    console.log("i am user",userExists)
     if(userExists)
       throw new HttpException('User already exists', 400);
     return this.userService.create(createUserDto);
   }
+
+  @UseGuards(JwtAuthGuard)
 
   @Get()
   findAll() {
