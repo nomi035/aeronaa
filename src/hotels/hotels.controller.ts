@@ -4,7 +4,7 @@ import { CreateHotelDto } from './dto/create-hotel.dto';
 import { UpdateHotelDto } from './dto/update-hotel.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guard';
-import { currentUser } from '../decorator';
+import { currentUser } from '../decorator/currentuser';
 import { UserService } from 'src/user/user.service';
 
 @ApiBearerAuth()
