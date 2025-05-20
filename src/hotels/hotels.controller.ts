@@ -27,6 +27,18 @@ export class HotelsController {
  async findAll(@currentUser()user:any) {
     return this.hotelsService.findAll(user.userId);
   }
+    @Get('/pending')
+  @UseGuards(JwtAuthGuard)
+ async findHotelPending(@currentUser()user:any) {
+    return this.hotelsService.findPendingHotel(user.userId);
+  }
+
+     @Get('/completed')
+  @UseGuards(JwtAuthGuard)
+ async findHotelCompleted(@currentUser()user:any) {
+    return this.hotelsService.findCompletedHotel(user.userId);
+  }
+
 
   @Get(':id')
   findOne(@Param('id') id: string) {

@@ -25,6 +25,30 @@ export class HotelsService {
     });
   }
 
+  async findPendingHotel(id:number){
+    return await this.hotelRepository.find({
+      where: {
+        user:{
+          id
+        },
+        isCompleted:false
+      }
+    })
+
+  }
+
+    async findCompletedHotel(id:number){
+    return await this.hotelRepository.find({
+      where: {
+        user:{
+          id
+        },
+        isCompleted:true
+      }
+    })
+
+  }
+
   findOne(id: number) {
     return this.hotelRepository.findOne({
       where: { id },
