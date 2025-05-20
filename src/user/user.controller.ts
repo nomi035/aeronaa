@@ -17,13 +17,12 @@ export class UserController {
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     const userExists = await this.userService.findByEmail(createUserDto.email);
-    console.log("i am user",userExists)
     if(userExists)
       throw new HttpException('User already exists', 400);
     return this.userService.create(createUserDto);
   }
 
-  @UseGuards(JwtAuthGuard)
+
 
   @Get()
   findAll() {
