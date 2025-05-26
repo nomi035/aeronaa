@@ -1,0 +1,58 @@
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { BookingsService } from './bookings.service';
+import { CreateBookingDto } from './dto/create-booking.dto';
+import { UpdateBookingDto } from './dto/update-booking.dto';
+import { UserService } from 'src/user/user.service';
+import { currentUser } from 'src/decorator/currentuser';
+import { JwtAuthGuard } from 'src/auth/guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+
+@ApiBearerAuth()
+@ApiTags('bookings')
+@Controller('bookings')
+export class BookingsController {
+  constructor(private readonly bookingsService: BookingsService,
+    private readonly usersService: UserService,
+
+  ) {
+
+  }
+
+  @Post()
+  @UseGuards(JwtAuthGuard)
+  async create(@Body() createBookingDto: CreateBookingDto,@currentUser() user:any) {
+    const currentUser = await this.usersService.findOne(user.userId);
+    return this.bookingsService.create({...createBookingDto, user: currentUser});
+  }
+
+  @Get()
+  findAll() {
+    return this.bookingsService.findAll();
+  }
+
+   @Get('/user')
+   @UseGuards(JwtAuthGuard)
+  findAllUserBookings(@currentUser() user:any) {
+    return this.bookingsService.findUserBookings(user.userId)
+  }
+
+   @Get('/hotel/:id')
+  findAllHotelBookings(@Param('id') id: string) {
+    return this.bookingsService.findHotelBookings(+id)
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.bookingsService.findOne(+id);
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateBookingDto: UpdateBookingDto) {
+    return this.bookingsService.update(+id, updateBookingDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.bookingsService.remove(+id);
+  }
+}
