@@ -30,6 +30,12 @@ export class BookingsController {
     return this.bookingsService.findAll();
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('/user/upcoming')
+  findUpComing(@currentUser() user:any) {
+    return this.bookingsService.findUpComing(user.userId);
+  }
+
    @Get('/user')
    @UseGuards(JwtAuthGuard)
   findAllUserBookings(@currentUser() user:any) {
