@@ -23,6 +23,9 @@ import { BookingsModule } from './bookings/bookings.module';
     url:process.env.DATABASE_URL,
     autoLoadEntities: true,
     synchronize: true,
+      ssl: {
+     rejectUnauthorized: false,
+     },
   }),
      AuthModule,
      HotelsModule,
