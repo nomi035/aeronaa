@@ -19,8 +19,8 @@ export class CreateBookingDto {
 
   user: User;
 
-   @ApiProperty()
-  room: Room;
+  @ApiProperty()
+  room: Room[];
 
   @ApiProperty()
   hotel: Hotel;

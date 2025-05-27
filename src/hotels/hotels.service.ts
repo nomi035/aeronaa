@@ -25,6 +25,10 @@ export class HotelsService {
     });
   }
 
+  async findAllHotels(){
+    return await this.hotelRepository.find()
+  }
+
   async findPendingHotel(id:number){
     return await this.hotelRepository.find({
       where: {

@@ -1,4 +1,5 @@
 import { BaseEntity } from "base.entity";
+import { Booking } from "src/bookings/entities/booking.entity";
 import { Hotel } from "src/hotels/entities/hotel.entity";
 import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
@@ -58,6 +59,12 @@ export class Room extends BaseEntity{
     })
     @JoinColumn()
     hotel: Hotel;
+
+    @ManyToOne(() => Booking, (booking) => booking.room,{
+      onDelete: 'CASCADE',
+    })
+    @JoinColumn()
+    booking: Booking;
 
 }
 export enum RoomType {

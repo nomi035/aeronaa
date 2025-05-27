@@ -2,7 +2,7 @@ import { BaseEntity } from 'base.entity';
 import { Hotel } from 'src/hotels/entities/hotel.entity';
 import { Room } from 'src/rooms/entities/room.entity';
 import { User } from 'src/user/entities/user.entity';
-import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
 
 @Entity('bookings')
 export class Booking extends BaseEntity {
@@ -26,9 +26,8 @@ export class Booking extends BaseEntity {
   @JoinColumn()
   hotel: Hotel;
 
-   @OneToOne(() => Room, { onDelete: 'CASCADE' })
-  @JoinColumn()
-  room: Room;
+ @OneToMany(() => Room, (room) => room.booking, { onDelete: 'CASCADE' })
+  room: Room[];
 
 
 }
