@@ -6,6 +6,7 @@ import { UserService } from 'src/user/user.service';
 import { currentUser } from 'src/decorator/currentuser';
 import { JwtAuthGuard } from 'src/auth/guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { RoomsService } from 'src/rooms/rooms.service';
 
 @ApiBearerAuth()
 @ApiTags('bookings')
@@ -13,6 +14,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 export class BookingsController {
   constructor(private readonly bookingsService: BookingsService,
     private readonly usersService: UserService,
+    private readonly roomService: RoomsService
 
   ) {
 
@@ -22,7 +24,9 @@ export class BookingsController {
   @UseGuards(JwtAuthGuard)
   async create(@Body() createBookingDto: CreateBookingDto,@currentUser() user:any) {
     const currentUser = await this.usersService.findOne(user.userId);
-    return this.bookingsService.create({...createBookingDto, user: currentUser});
+    const room=await this.roomService.findByIds(createBookingDto.room);
+
+    return this.bookingsService.create({...createBookingDto, user: currentUser, room:room});
   }
 
   @Get()

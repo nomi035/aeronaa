@@ -3,7 +3,7 @@ import { CreateRoomDto } from './dto/create-room.dto';
 import { UpdateRoomDto } from './dto/update-room.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Room } from './entities/room.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 
 @Injectable()
 export class RoomsService {
@@ -28,6 +28,13 @@ export class RoomsService {
       relations:{
         hotel:true
       }
+    });
+  }
+  async findByIds(ids: Room[]) {
+     return this.roomRepository.find({
+      where: {
+        id: In(ids),
+  }
     });
   }
 

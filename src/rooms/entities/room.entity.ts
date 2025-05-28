@@ -1,7 +1,7 @@
 import { BaseEntity } from "base.entity";
 import { Booking } from "src/bookings/entities/booking.entity";
 import { Hotel } from "src/hotels/entities/hotel.entity";
-import { Column, Entity, JoinColumn, ManyToMany, ManyToOne } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne } from "typeorm";
 
 @Entity('rooms')
 export class Room extends BaseEntity{
@@ -63,7 +63,7 @@ export class Room extends BaseEntity{
     @ManyToMany(() => Booking, (booking) => booking.room,{
       onDelete: 'CASCADE',
     })
-    @JoinColumn()
+    @JoinTable()
     booking: Booking;
 
 }
