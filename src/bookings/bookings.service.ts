@@ -26,7 +26,8 @@ export class BookingsService {
       where:{
         user:{id:id},
         checkIndate:MoreThan(new Date()),
-      }
+      },
+      relations: ['hotel','room']
     });
   }
 
