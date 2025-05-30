@@ -34,7 +34,7 @@ export class ReviewsService {
   findUSerReviews(id: number) {
     return this.reviewRepository.find({
       where: { user: { id } },
-      relations: ['user', 'hotel'],
+      relations: [ 'hotel'],
       order: {
         createdAt: 'DESC',
       },
@@ -50,7 +50,7 @@ export class ReviewsService {
       },
     });
   }
-  
+
 
   update(id: number, updateReviewDto: UpdateReviewDto) {
     return this.reviewRepository.update(id, updateReviewDto)

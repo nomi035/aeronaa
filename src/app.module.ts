@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { HotelsModule } from './hotels/hotels.module';
 import { RoomsModule } from './rooms/rooms.module';
 import { BookingsModule } from './bookings/bookings.module';
+import { ReviewsModule } from './reviews/reviews.module';
 
 
 @Module({
@@ -31,6 +32,7 @@ import { BookingsModule } from './bookings/bookings.module';
      HotelsModule,
      RoomsModule,
      BookingsModule,
+     ReviewsModule,
     ],
   controllers: [AppController],
   providers: [AppService],
