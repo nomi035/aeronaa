@@ -31,8 +31,8 @@ export class ReviewsService {
   } );
   }
 
-  findUSerReviews(id: number) {
-    return this.reviewRepository.find({
+  async findUSerReviews(id: number) {
+    return await this.reviewRepository.find({
       where: { user: { id } },
       relations: [ 'hotel'],
       order: {
