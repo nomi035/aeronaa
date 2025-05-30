@@ -6,13 +6,16 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guard';
 import { currentUser } from '../decorator/currentuser';
 import { UserService } from 'src/user/user.service';
+import { BookingsService } from 'src/bookings/bookings.service';
+import { CreateFavouriteDto } from 'src/bookings/dto/create-favourite.dto';
 
 @ApiBearerAuth()
 @Controller('hotels')
 @ApiTags('hotels')
 export class HotelsController {
   constructor(private readonly hotelsService: HotelsService,
-    private readonly usersService: UserService
+    private readonly usersService: UserService,
+    private readonly bookingsService:BookingsService
   ) {}
 
   @Post()
@@ -59,5 +62,28 @@ export class HotelsController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.hotelsService.remove(+id);
+  }
+
+   @Post('/add/favourites')
+  @UseGuards(JwtAuthGuard)
+  async createFavourite(@Body() createFavouriteDto: CreateFavouriteDto, @currentUser() user:any) {
+    const currentUser = await this.usersService.findOne(user.userId);
+    //return createFavouriteDto
+    return this.bookingsService.createFavourite({
+      ...createFavouriteDto,
+      user: currentUser,
+    })
+  }
+
+  @Get('/favourites/users')
+  @UseGuards(JwtAuthGuard)
+  async findAllFavourite(@currentUser()user:any) {
+    return this.bookingsService.findUserFavourites(user.userId);
+  }
+
+
+  @Delete('/favourites/:id')
+  async removeFavourite(@Param('id') id: string) {
+ return await this.bookingsService.removeFavourite(+id);
   }
 }

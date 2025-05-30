@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Booking } from './entities/booking.entity';
 import { LessThan, MoreThan, Repository } from 'typeorm';
 import { Favourites } from './entities/favourites.entity';
+import { CreateFavouriteDto } from './dto/create-favourite.dto';
 
 @Injectable()
 export class BookingsService {
@@ -15,6 +16,24 @@ export class BookingsService {
   }
   create(createBookingDto: CreateBookingDto) {
     return this.bookingRepository.save(createBookingDto);
+  }
+
+  createFavourite(createFavouriteDto: CreateFavouriteDto) {
+    return this.favouritesRepository.save(createFavouriteDto);
+  }
+
+  removeFavourite(id: number) {
+    return this.favouritesRepository.delete(id);
+  }
+
+  findUserFavourites(id: number) {
+    return this.favouritesRepository.find({
+      where:{user:{id}}
+      ,relations: ['hotel']
+      ,order:{
+        'createdAt': 'DESC'
+      }
+    })
   }
 
   findAll() {

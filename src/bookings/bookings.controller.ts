@@ -7,6 +7,7 @@ import { currentUser } from 'src/decorator/currentuser';
 import { JwtAuthGuard } from 'src/auth/guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { RoomsService } from 'src/rooms/rooms.service';
+import { CreateFavouriteDto } from './dto/create-favourite.dto';
 
 @ApiBearerAuth()
 @ApiTags('bookings')
@@ -33,6 +34,8 @@ export class BookingsController {
   findAll() {
     return this.bookingsService.findAll();
   }
+
+ 
 
   @UseGuards(JwtAuthGuard)
   @Get('/user/upcoming')

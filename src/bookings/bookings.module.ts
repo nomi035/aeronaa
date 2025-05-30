@@ -12,5 +12,6 @@ import { RoomsModule } from 'src/rooms/rooms.module';
   controllers: [BookingsController],
   providers: [BookingsService],
   imports:[TypeOrmModule.forFeature([Booking,Favourites]),UserModule,RoomsModule],
+  exports: [BookingsService]
 })
 export class BookingsModule {}
