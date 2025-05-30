@@ -26,6 +26,15 @@ export class BookingsService {
     return this.favouritesRepository.delete(id);
   }
 
+  findFavourite(userId: number,hotelId: number) {
+    return this.favouritesRepository.find({
+      where: {
+        user: { id: userId },
+        hotel: { id: hotelId }
+      }
+    })
+  }
+
   findUserFavourites(id: number) {
     return this.favouritesRepository.find({
       where:{user:{id}}

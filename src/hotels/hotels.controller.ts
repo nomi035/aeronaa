@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, HttpException } from '@nestjs/common';
 import { HotelsService } from './hotels.service';
 import { CreateHotelDto } from './dto/create-hotel.dto';
 import { UpdateHotelDto } from './dto/update-hotel.dto';
@@ -68,7 +68,11 @@ export class HotelsController {
   @UseGuards(JwtAuthGuard)
   async createFavourite(@Body() createFavouriteDto: CreateFavouriteDto, @currentUser() user:any) {
     const currentUser = await this.usersService.findOne(user.userId);
-    //return createFavouriteDto
+    const existingFavourite = await this.bookingsService.findFavourite(currentUser.id,createFavouriteDto.hotel as any  );
+    if (existingFavourite.length > 0) {
+      throw new HttpException('Favourite already exists', 400);
+    }
+
     return this.bookingsService.createFavourite({
       ...createFavouriteDto,
       user: currentUser,
