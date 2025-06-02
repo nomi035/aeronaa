@@ -35,13 +35,26 @@ export class BookingsController {
     return this.bookingsService.findAll();
   }
 
- 
+
 
   @UseGuards(JwtAuthGuard)
   @Get('/user/upcoming')
   findUpComing(@currentUser() user:any) {
     return this.bookingsService.findUpComing(user.userId);
   }
+
+   @UseGuards(JwtAuthGuard)
+  @Get('/user/past')
+  findPast(@currentUser() user:any) {
+    return this.bookingsService.findPast(user.userId);
+  }
+
+    @UseGuards(JwtAuthGuard)
+  @Get('/user/cancelled')
+  findCancelled(@currentUser() user:any) {
+    return this.bookingsService.findPast(user.userId);
+  }
+
 
    @Get('/user')
    @UseGuards(JwtAuthGuard)
