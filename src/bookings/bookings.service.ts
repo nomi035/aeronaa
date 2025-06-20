@@ -47,6 +47,7 @@ export class BookingsService {
 
   findAll() {
     return this.bookingRepository.find({
+      relations: ['hotel', 'user', 'room'],
        order: {
         createdAt: 'DESC',
       },
