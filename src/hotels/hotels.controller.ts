@@ -85,6 +85,11 @@ export class HotelsController {
     return this.bookingsService.findUserFavourites(user.userId);
   }
 
+  @Get('admin/vendors/:id')
+  async findVendorHotels(@Param('id') id: string) {
+    return this.hotelsService.findAll(+id);
+  }
+
 
   @Delete('/favourites/:id')
   async removeFavourite(@Param('id') id: string) {
