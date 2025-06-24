@@ -68,4 +68,9 @@ export class Hotel extends BaseEntity {
   })
   @JoinColumn()
   user: User;
+
+  @Column({
+    default:true
+  })
+  dataByApi: boolean;
 }

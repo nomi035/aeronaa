@@ -101,4 +101,10 @@ export class CreateHotelDto {
 
   @IsOptional()
   user:User
+
+  @ApiProperty({
+    description:"userId of the user who created the hotel",
+  })
+   @IsOptional()
+   dataByApi:boolean
 }
