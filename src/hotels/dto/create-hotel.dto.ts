@@ -107,4 +107,6 @@ export class CreateHotelDto {
   })
    @IsOptional()
    dataByApi:boolean
+
+    apiId?: string;
 }

@@ -73,4 +73,9 @@ export class Hotel extends BaseEntity {
     default:true
   })
   dataByApi: boolean;
+
+  @Column({
+    default:null
+  })
+  apiId: string;
 }
