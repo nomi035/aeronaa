@@ -1,6 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger"
 import { Hotel } from "src/hotels/entities/hotel.entity"
 import { RoomType } from "../entities/room.entity"
+import { Transform } from "class-transformer"
 
 export class CreateRoomDto {
        @ApiProperty()
@@ -21,15 +22,18 @@ export class CreateRoomDto {
       ]
 
       @ApiProperty()
+      @Transform(({ value }) => Math.floor(parseFloat(value)))
       roomSize: number
 
       @ApiProperty()
       roomSizeUnit: string
 
       @ApiProperty()
+       @Transform(({ value }) => Math.floor(parseFloat(value)))
       basePrice: number
 
       @ApiProperty()
+       @Transform(({ value }) => Math.floor(parseFloat(value)))
       discountedPrice?: number
 
       @ApiProperty()
