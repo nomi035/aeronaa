@@ -35,7 +35,7 @@ export class HotelsService {
         user:{
           id
         },
-        isCompleted:false
+        isCompleted:0
       }
     })
 
@@ -47,7 +47,7 @@ export class HotelsService {
         user:{
           id
         },
-        isCompleted:true
+        isCompleted:1
       }
     })
 
