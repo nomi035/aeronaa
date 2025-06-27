@@ -44,7 +44,7 @@ export class HotelsController {
   ) {
     const currentUser = await this.usersService.findOne(user.userId);
       var images = [];
-      if(files.length > 0){
+      if(files?.length > 0){
     for (const [index, file] of files.entries()) {
       var url: any;
         url = await this.fileUploadService.uploadToS3(file.buffer, file.originalname);
@@ -87,9 +87,9 @@ export class HotelsController {
   @UseInterceptors(AnyFilesInterceptor())
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateHotelDto: UpdateHotelDto, @UploadedFiles() files: Array<Express.Multer.File>) {
-       
+
       var images = [];
-      if(files.length > 0){
+      if(files?.length > 0){
     for (const [index, file] of files.entries()) {
       var url: any;
         url = await this.fileUploadService.uploadToS3(file.buffer, file.originalname);
