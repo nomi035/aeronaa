@@ -97,7 +97,7 @@ export class CreateHotelDto {
     description:"flag for hotel completion when the form is submitted fully send true else false ",
   })
    @IsOptional()
-  isCompleted?:boolean
+  isCompleted?:number
 
   @IsOptional()
   user:User

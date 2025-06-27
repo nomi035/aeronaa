@@ -61,7 +61,7 @@ export class Hotel extends BaseEntity {
   @Column({
     nullable: true,
   })
-  isCompleted: boolean;
+  isCompleted: number;
 
     @ManyToOne(() => User, {
     onDelete: 'CASCADE',
