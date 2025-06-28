@@ -6,20 +6,42 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
+  UploadedFiles,
 } from '@nestjs/common';
 import { RoomsService } from './rooms.service';
 import { CreateRoomDto } from './dto/create-room.dto';
 import { UpdateRoomDto } from './dto/update-room.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { AnyFilesInterceptor } from '@nestjs/platform-express';
+import { FileService } from 'src/file-upload/file-upload.service';
 
 @Controller('rooms')
 @ApiTags('Room')
 export class RoomsController {
-  constructor(private readonly roomsService: RoomsService) {}
+  constructor(
+    private readonly roomsService: RoomsService,
+    private readonly fileUploadService: FileService,
+  ) {}
 
   @Post()
-  create(@Body() createRoomDto: CreateRoomDto) {
-    return this.roomsService.create(createRoomDto);
+  @UseInterceptors(AnyFilesInterceptor())
+  async create(
+    @Body() createRoomDto: CreateRoomDto,
+    @UploadedFiles() files: Array<Express.Multer.File>,
+  ) {
+    var images = [];
+    if (files?.length > 0) {
+      for (const [index, file] of files.entries()) {
+        var url: any;
+        url = await this.fileUploadService.uploadToS3(
+          file.buffer,
+          file.originalname,
+        );
+        images.push(url.Location);
+      }
+      return this.roomsService.create({ ...createRoomDto, images: images });
+    } else return this.roomsService.create(createRoomDto);
   }
 
   @Get()
@@ -38,8 +60,25 @@ export class RoomsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRoomDto: UpdateRoomDto) {
-    return this.roomsService.update(+id, updateRoomDto);
+  @UseInterceptors(AnyFilesInterceptor())
+ async update(
+    @Param('id') id: string,
+    @Body() updateRoomDto: UpdateRoomDto,
+    @UploadedFiles() files: Array<Express.Multer.File>,
+  ) {
+    var images = [];
+    if (files?.length > 0) {
+      for (const [index, file] of files.entries()) {
+        var url: any;
+        url = await this.fileUploadService.uploadToS3(
+          file.buffer,
+          file.originalname,
+        );
+        images.push(url.Location);
+      }
+      return this.roomsService.update(+id,{ ...updateRoomDto, images: images });
+    } else return this.roomsService.update(+id,updateRoomDto);
+    
   }
 
   @Delete(':id')
