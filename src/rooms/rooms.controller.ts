@@ -76,9 +76,10 @@ export class RoomsController {
         );
         images.push(url.Location);
       }
+      updateRoomDto.images = [...updateRoomDto.images, ...images];
       return this.roomsService.update(+id,{ ...updateRoomDto, images: images });
     } else return this.roomsService.update(+id,updateRoomDto);
-    
+
   }
 
   @Delete(':id')

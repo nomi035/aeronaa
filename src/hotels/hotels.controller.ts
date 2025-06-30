@@ -95,7 +95,9 @@ export class HotelsController {
         url = await this.fileUploadService.uploadToS3(file.buffer, file.originalname);
         images.push(url.Location);
      }
-    return this.hotelsService.update(+id,{ ...updateHotelDto,images: images });
+     updateHotelDto.images = [...updateHotelDto.images, ...images];
+     // If you want to keep existing images and add new ones, you can do
+    return this.hotelsService.update(+id,updateHotelDto);
   }
   else
   return this.hotelsService.update(+id,updateHotelDto);
