@@ -61,7 +61,7 @@ export class RoomsController {
 
   @Patch(':id')
   @UseInterceptors(AnyFilesInterceptor())
- async update(
+  async update(
     @Param('id') id: string,
     @Body() updateRoomDto: UpdateRoomDto,
     @UploadedFiles() files: Array<Express.Multer.File>,
@@ -76,10 +76,21 @@ export class RoomsController {
         );
         images.push(url.Location);
       }
-      updateRoomDto.images = [...updateRoomDto.images, ...images];
-      return this.roomsService.update(+id,{ ...updateRoomDto, images: images });
-    } else return this.roomsService.update(+id,updateRoomDto);
-
+      if (
+        Array.isArray(updateRoomDto.images) &&
+        updateRoomDto.images.length > 0
+      ) {
+        updateRoomDto.images = [...updateRoomDto.images, ...images];
+        return this.roomsService.update(+id, {
+          ...updateRoomDto,
+          images: images,
+        });
+      } else
+        return this.roomsService.update(+id, {
+          ...updateRoomDto,
+          images: images,
+        });
+    } else return this.roomsService.update(+id, updateRoomDto);
   }
 
   @Delete(':id')

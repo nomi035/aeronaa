@@ -87,7 +87,7 @@ export class HotelsController {
   @UseInterceptors(AnyFilesInterceptor())
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateHotelDto: UpdateHotelDto, @UploadedFiles() files: Array<Express.Multer.File>) {
-    console.log(    "updateHotelDto", updateHotelDto);
+  
       var images = [];
       if(files?.length > 0){
     for (const [index, file] of files.entries()) {
@@ -95,11 +95,15 @@ export class HotelsController {
         url = await this.fileUploadService.uploadToS3(file.buffer, file.originalname);
         images.push(url.Location);
      }
+     if (Array.isArray(updateHotelDto.images) && updateHotelDto.images.length > 0) {
      updateHotelDto.images = [...updateHotelDto.images, ...images];
      // If you want to keep existing images and add new ones, you can do
-     console.log("first", updateHotelDto.images);
     return this.hotelsService.update(+id,updateHotelDto);
   }
+  else
+    return this.hotelsService.update(+id,{...updateHotelDto,images:images});
+
+}
   else
   return this.hotelsService.update(+id,updateHotelDto);
   }
