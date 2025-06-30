@@ -98,7 +98,7 @@ export class HotelsController {
      updateHotelDto.images = [...updateHotelDto.images, ...images];
      // If you want to keep existing images and add new ones, you can do
      console.log("first", updateHotelDto.images);
-    // return this.hotelsService.update(+id,updateHotelDto);
+    return this.hotelsService.update(+id,updateHotelDto);
   }
   else
   return this.hotelsService.update(+id,updateHotelDto);
