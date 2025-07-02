@@ -10,6 +10,7 @@ import {
   HttpException,
   UseInterceptors,
   UploadedFiles,
+  Query,
 } from '@nestjs/common';
 import { AnyFilesInterceptor, FileInterceptor } from '@nestjs/platform-express';
 import { HotelsService } from './hotels.service';
@@ -63,7 +64,7 @@ export class HotelsController {
   }
 
   @Get('/all/list')
-  async findAllHotels() {
+  async findAllHotels(@Query('location')location : string) {
     return this.hotelsService.findAllHotels();
   }
 
@@ -87,7 +88,7 @@ export class HotelsController {
   @UseInterceptors(AnyFilesInterceptor())
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateHotelDto: UpdateHotelDto, @UploadedFiles() files: Array<Express.Multer.File>) {
-  
+
       var images = [];
       if(files?.length > 0){
     for (const [index, file] of files.entries()) {

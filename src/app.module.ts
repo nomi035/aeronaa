@@ -10,6 +10,7 @@ import { RoomsModule } from './rooms/rooms.module';
 import { BookingsModule } from './bookings/bookings.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { FileUploadModule } from './file-upload/file-upload.module';
+import { StripeModule } from './stripe/stripe.module';
 
 
 @Module({
@@ -35,6 +36,7 @@ import { FileUploadModule } from './file-upload/file-upload.module';
      BookingsModule,
      ReviewsModule,
     FileUploadModule,
+    StripeModule,
     ],
   controllers: [AppController],
   providers: [AppService],
