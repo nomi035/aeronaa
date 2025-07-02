@@ -78,4 +78,10 @@ export class Hotel extends BaseEntity {
     default:null
   })
   apiId: string;
+
+  @Column({
+    nullable:true,
+    default: 200
+  })
+  averagePrice:string
 }

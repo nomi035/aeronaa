@@ -1,112 +1,94 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsOptional } from "class-validator";
-import { User } from "src/user/entities/user.entity";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsOptional } from 'class-validator';
+import { User } from 'src/user/entities/user.entity';
 
 export class CreateHotelDto {
-     @ApiProperty({
-        description:"name of the hotel",
-        required:true
-    })
-    @IsOptional()
-  name: string;
-
-   @ApiProperty({
-        description:"description of the hotel",
-        required:true
-    })
-    @IsOptional()
-  description: string;
-
   @ApiProperty({
-
-  })
-   @IsOptional()
-  starRating: string;
-
-@ApiProperty({
-
-  })
-   @IsOptional()
-  Address: string;
-
-  @ApiProperty({
-
-  })
-   @IsOptional()
-  city: string;
-  @ApiProperty({
-
+    description: 'name of the hotel',
+    required: true,
   })
   @IsOptional()
-  state: string
+  name: string;
 
   @ApiProperty({
-
+    description: 'description of the hotel',
+    required: true,
   })
+  @IsOptional()
+  description: string;
+
+  @ApiProperty({})
+  @IsOptional()
+  starRating: string;
+
+  @ApiProperty({})
+  @IsOptional()
+  Address: string;
+
+  @ApiProperty({})
+  @IsOptional()
+  city: string;
+  @ApiProperty({})
+  @IsOptional()
+  state: string;
+
+  @ApiProperty({})
   @IsOptional()
   zipCode: string;
 
-@ApiProperty({
-
-  })
-   @IsOptional()
+  @ApiProperty({})
+  @IsOptional()
   country: string;
 
-  @ApiProperty({
-
-  })
-   @IsOptional()
+  @ApiProperty({})
+  @IsOptional()
   checkInTime: string;
 
-  @ApiProperty({
-
-  })
-   @IsOptional()
+  @ApiProperty({})
+  @IsOptional()
   checkOutTime: string;
 
-  @ApiProperty({
-
-  })
-   @IsOptional()
+  @ApiProperty({})
+  @IsOptional()
   availableFrom: Date;
 
-  @ApiProperty({
-
-  })
-   @IsOptional()
+  @ApiProperty({})
+  @IsOptional()
   availableTo: Date;
 
   @ApiProperty({
-    description:"ameneties will be in the form of array",
-
+    description: 'ameneties will be in the form of array',
   })
-   @IsOptional()
+  @IsOptional()
   amenities: string[];
 
-   @IsOptional()
+  @IsOptional()
   images?: string[];
 
   @ApiProperty({
-    description:"tags will be in the form of array",
+    description: 'tags will be in the form of array',
   })
-   @IsOptional()
+  @IsOptional()
   tags: string[];
 
-
   @ApiProperty({
-    description:"flag for hotel completion when the form is submitted fully send true else false ",
+    description:
+      'flag for hotel completion when the form is submitted fully send true else false ',
   })
-   @IsOptional()
-  isCompleted?:number
+  @IsOptional()
+  isCompleted?: number;
 
   @IsOptional()
-  user:User
+  user: User;
 
   @ApiProperty({
-    description:"userId of the user who created the hotel",
+    description: 'userId of the user who created the hotel',
   })
-   @IsOptional()
-   dataByApi:boolean
+  @IsOptional()
+  dataByApi: boolean;
 
-    apiId?: string;
+  apiId?: string;
+
+  @ApiProperty()
+  averagePrice: string;
 }
