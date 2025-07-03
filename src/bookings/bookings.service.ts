@@ -59,6 +59,7 @@ export class BookingsService {
       where: {
         user: { id: id },
         checkIndate: MoreThan(new Date()),
+        isActive: true,
       },
       relations: ['hotel', 'room'],
       order: {
@@ -71,6 +72,7 @@ export class BookingsService {
       where: {
         user: { id: id },
         checkIndate: LessThan(new Date()),
+        isActive: true,
       },
       relations: ['hotel', 'room'],
       order: {

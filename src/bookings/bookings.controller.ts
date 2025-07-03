@@ -52,7 +52,7 @@ export class BookingsController {
     @UseGuards(JwtAuthGuard)
   @Get('/user/cancelled')
   findCancelled(@currentUser() user:any) {
-    return this.bookingsService.findPast(user.userId);
+    return this.bookingsService.findCancelled(user.userId);
   }
 
 

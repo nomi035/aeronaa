@@ -28,7 +28,8 @@ export class HotelsService {
   async findAllHotels(location?: string) {
     return await this.hotelRepository.find({
       where:{
-        city:location
+        city:location,
+        dataByApi:false
       }
 
 
