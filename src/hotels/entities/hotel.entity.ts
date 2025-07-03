@@ -70,7 +70,7 @@ export class Hotel extends BaseEntity {
   user: User;
 
   @Column({
-    default:true
+    default:false
   })
   dataByApi: boolean;
 
