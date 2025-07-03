@@ -65,7 +65,7 @@ export class HotelsController {
 
   @Get('/all/list')
   async findAllHotels(@Query('location')location : string) {
-    return this.hotelsService.findAllHotels();
+    return this.hotelsService.findAllHotels(location);
   }
 
   @Get('/pending')
