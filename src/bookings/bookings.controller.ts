@@ -8,6 +8,7 @@ import { JwtAuthGuard } from 'src/auth/guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { RoomsService } from 'src/rooms/rooms.service';
 import { CreateFavouriteDto } from './dto/create-favourite.dto';
+import { StripeService } from 'src/stripe/stripe.service';
 
 @ApiBearerAuth()
 @ApiTags('bookings')
@@ -15,7 +16,8 @@ import { CreateFavouriteDto } from './dto/create-favourite.dto';
 export class BookingsController {
   constructor(private readonly bookingsService: BookingsService,
     private readonly usersService: UserService,
-    private readonly roomService: RoomsService
+    private readonly roomService: RoomsService,
+    private readonly stripeService:StripeService
 
   ) {
 
@@ -29,6 +31,23 @@ export class BookingsController {
 
     return this.bookingsService.create({...createBookingDto, user: currentUser, room:room});
   }
+
+   @Post('checkout')
+  async createCheckout(@Body() body: any) {
+    const session = await this.stripeService.createCheckoutSession({
+      amount: body.amount,
+      currency: body.currency,
+      successUrl: body.successUrl,
+      cancelUrl: body.cancelUrl,
+      customerEmail: body.email,
+      metadata: {
+        bookingId: body.bookingId,
+      },
+    });
+
+    return { url: session.url };
+  }
+
 
   @Get()
   findAll() {
