@@ -58,7 +58,7 @@ export class BookingsService {
     return this.bookingRepository.find({
       where: {
         user: { id: id },
-        checkIndate: MoreThan(new Date()),
+        checkIndate: MoreThan(new Date(Date.now() - 86400000)),
         isActive: true,
       },
       relations: ['hotel', 'room'],
@@ -71,7 +71,7 @@ export class BookingsService {
     return this.bookingRepository.find({
       where: {
         user: { id: id },
-        checkIndate: LessThan(new Date()),
+        checkIndate: LessThan(new Date(Date.now() - 86400000)),
         isActive: true,
       },
       relations: ['hotel', 'room'],
