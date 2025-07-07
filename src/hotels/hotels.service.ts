@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateHotelDto } from './dto/create-hotel.dto';
 import { UpdateHotelDto } from './dto/update-hotel.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { Hotel } from './entities/hotel.entity';
 
 @Injectable()
@@ -26,9 +26,12 @@ export class HotelsService {
   }
 
   async findAllHotels(location?: string) {
+
+    location =location?.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    console.log(location)
     return await this.hotelRepository.find({
       where:{
-        city:location,
+        city:location ? ILike(`%${location}%`) : undefined,
         dataByApi:false
       }
 
