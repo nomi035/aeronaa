@@ -16,9 +16,6 @@ export const UserSwaggerSchema = {
           phone:{
             type: 'string',
           },
-          address:{
-            type: 'string',
-          },
           role: {
             type: 'string',
           },

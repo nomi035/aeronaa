@@ -57,6 +57,11 @@ export class HotelsController {
   return this.hotelsService.create({ ...createHotelDto, user: currentUser});
 }
 
+@Post('/by/agoda')
+async createByAgoda( @Body() createHotelDto: CreateHotelDto,){
+  return this.hotelsService.create(createHotelDto);
+}
+
   @Get()
   @UseGuards(JwtAuthGuard)
   async findAll(@currentUser() user: any) {

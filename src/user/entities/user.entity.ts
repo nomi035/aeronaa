@@ -19,5 +19,6 @@ export enum Role {
  VENDOR='vendor',
  USER='user',
  ADMIN='admin',
+ SUPPORT='support'
 
 }
