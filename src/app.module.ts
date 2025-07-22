@@ -11,6 +11,7 @@ import { BookingsModule } from './bookings/bookings.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { FileUploadModule } from './file-upload/file-upload.module';
 import { StripeModule } from './stripe/stripe.module';
+import { FlightsModule } from './flights/flights.module';
 
 
 @Module({
@@ -37,6 +38,7 @@ import { StripeModule } from './stripe/stripe.module';
      ReviewsModule,
     FileUploadModule,
     StripeModule,
+    FlightsModule,
     ],
   controllers: [AppController],
   providers: [AppService],
