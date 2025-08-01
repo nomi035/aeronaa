@@ -143,4 +143,17 @@ export class BookingsService {
     return bookings
 
   }
+
+  async findTotalBookings() {
+    const totalAmount=await this.bookingRepository
+      .createQueryBuilder('booking')
+      .select('SUM(booking.amount)', 'totalAmount')
+      .getRawOne();
+    const totalBookings=await this.bookingRepository.count();
+    return{
+      totalAmount: totalAmount,
+      totalBookings: totalBookings
+    }
+
+  }
 }

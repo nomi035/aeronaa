@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
+import { Role, User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -34,5 +34,21 @@ async  create(createUserDto: CreateUserDto) {
 
   async remove(id: number) {
     return await this.usersRepository.delete(id);
+  }
+  async findTotalUsers(){
+    const userCount=await this.usersRepository.count({
+      where:{
+        role:Role.USER
+      }
+    })
+    const vendorCount=await this.usersRepository.count({
+      where:{
+        role:Role.VENDOR
+      }
+    })
+    return {
+      userCount,
+      vendorCount
+    }
   }
 }

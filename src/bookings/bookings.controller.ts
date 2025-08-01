@@ -129,4 +129,18 @@ export class BookingsController {
   ) {
     return this.bookingsService.getVendorPaymentsDetails( +id,startDate,endDate);
   }
+
+  @Get('/admin/stats')
+  async getAdminStats() {
+    const totalUsers=await this.usersService.findTotalUsers()
+    const bookingStats=await this.bookingsService.findTotalBookings()
+
+    return{
+      userCount:totalUsers.userCount,
+      vendorCount:totalUsers.vendorCount,
+      totalBookings:bookingStats.totalBookings,
+      totalAmount:bookingStats.totalAmount.totalAmount,
+    }
+
+  }
 }
