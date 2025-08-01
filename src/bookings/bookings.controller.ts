@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  Query,
+} from '@nestjs/common';
 import { BookingsService } from './bookings.service';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
@@ -14,25 +24,30 @@ import { StripeService } from 'src/stripe/stripe.service';
 @ApiTags('bookings')
 @Controller('bookings')
 export class BookingsController {
-  constructor(private readonly bookingsService: BookingsService,
+  constructor(
+    private readonly bookingsService: BookingsService,
     private readonly usersService: UserService,
     private readonly roomService: RoomsService,
-    private readonly stripeService:StripeService
-
-  ) {
-
-  }
+    private readonly stripeService: StripeService,
+  ) {}
 
   @Post()
   @UseGuards(JwtAuthGuard)
-  async create(@Body() createBookingDto: CreateBookingDto,@currentUser() user:any) {
+  async create(
+    @Body() createBookingDto: CreateBookingDto,
+    @currentUser() user: any,
+  ) {
     const currentUser = await this.usersService.findOne(user.userId);
-    const room=await this.roomService.findByIds(createBookingDto.room);
+    const room = await this.roomService.findByIds(createBookingDto.room);
 
-    return this.bookingsService.create({...createBookingDto, user: currentUser, room:room});
+    return this.bookingsService.create({
+      ...createBookingDto,
+      user: currentUser,
+      room: room,
+    });
   }
 
-   @Post('checkout')
+  @Post('checkout')
   async createCheckout(@Body() body: any) {
     const session = await this.stripeService.createCheckoutSession({
       amount: body.amount,
@@ -48,42 +63,38 @@ export class BookingsController {
     return { url: session.url };
   }
 
-
   @Get()
   findAll() {
     return this.bookingsService.findAll();
   }
 
-
-
   @UseGuards(JwtAuthGuard)
   @Get('/user/upcoming')
-  findUpComing(@currentUser() user:any) {
+  findUpComing(@currentUser() user: any) {
     return this.bookingsService.findUpComing(user.userId);
   }
 
-   @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get('/user/past')
-  findPast(@currentUser() user:any) {
+  findPast(@currentUser() user: any) {
     return this.bookingsService.findPast(user.userId);
   }
 
-    @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get('/user/cancelled')
-  findCancelled(@currentUser() user:any) {
+  findCancelled(@currentUser() user: any) {
     return this.bookingsService.findCancelled(user.userId);
   }
 
-
-   @Get('/user')
-   @UseGuards(JwtAuthGuard)
-  findAllUserBookings(@currentUser() user:any) {
-    return this.bookingsService.findUserBookings(user.userId)
+  @Get('/user')
+  @UseGuards(JwtAuthGuard)
+  findAllUserBookings(@currentUser() user: any) {
+    return this.bookingsService.findUserBookings(user.userId);
   }
 
-   @Get('/hotel/:id')
+  @Get('/hotel/:id')
   findAllHotelBookings(@Param('id') id: string) {
-    return this.bookingsService.findHotelBookings(+id)
+    return this.bookingsService.findHotelBookings(+id);
   }
 
   @Get(':id')
@@ -99,5 +110,14 @@ export class BookingsController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.bookingsService.remove(+id);
+  }
+
+  @Get('vendor/payments/:id')
+  async getVendorPayments(
+    @Param('id') id: string,
+    @Query('startDate') startDate: Date,
+    @Query('endDate') endDate: Date,
+  ) {
+    return this.bookingsService.getVendorPayments( +id,startDate,endDate);
   }
 }

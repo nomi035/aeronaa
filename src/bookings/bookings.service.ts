@@ -3,7 +3,7 @@ import { CreateBookingDto } from './dto/create-booking.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Booking } from './entities/booking.entity';
-import { LessThan, MoreThan, Repository } from 'typeorm';
+import { Between, LessThan, MoreThan, Repository } from 'typeorm';
 import { Favourites } from './entities/favourites.entity';
 import { CreateFavouriteDto } from './dto/create-favourite.dto';
 
@@ -119,5 +119,19 @@ export class BookingsService {
 
   remove(id: number) {
     return this.bookingRepository.delete(id);
+  }
+
+  async getVendorPayments(hotelId: number,startDate: Date, endDate: Date) {
+    const bookings= await this.bookingRepository.find({
+      where:{hotel:{id:hotelId},checkIndate:Between(startDate,endDate)}
+
+    })
+    const totalAmount = bookings.reduce((acc, booking) => acc + booking.amount, 0);
+    return {
+      startDate: startDate,
+      endDate: endDate,
+      totalAmount: totalAmount,
+
+    }
   }
 }
