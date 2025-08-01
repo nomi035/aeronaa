@@ -134,4 +134,13 @@ export class BookingsService {
 
     }
   }
+   async getVendorPaymentsDetails(hotelId: number,startDate: Date, endDate: Date) {
+    const bookings= await this.bookingRepository.find({
+      where:{hotel:{id:hotelId},checkIndate:Between(startDate,endDate)},
+      relations:['user']
+
+    })
+    return bookings
+
+  }
 }

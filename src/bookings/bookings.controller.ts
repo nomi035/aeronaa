@@ -120,4 +120,13 @@ export class BookingsController {
   ) {
     return this.bookingsService.getVendorPayments( +id,startDate,endDate);
   }
+
+   @Get('vendor/bookings/details/:id')
+  async getVendorBookingsDetails(
+    @Param('id') id: string,
+    @Query('startDate') startDate: Date,
+    @Query('endDate') endDate: Date,
+  ) {
+    return this.bookingsService.getVendorPaymentsDetails( +id,startDate,endDate);
+  }
 }
