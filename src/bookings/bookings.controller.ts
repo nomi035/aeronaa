@@ -134,12 +134,14 @@ export class BookingsController {
   async getAdminStats() {
     const totalUsers=await this.usersService.findTotalUsers()
     const bookingStats=await this.bookingsService.findTotalBookings()
+    const monthwiseRevenue=await this.bookingsService.findMonthWiseRevenue()
 
     return{
       userCount:totalUsers.userCount,
       vendorCount:totalUsers.vendorCount,
       totalBookings:bookingStats.totalBookings,
       totalAmount:bookingStats.totalAmount.totalAmount,
+      monthRevenue:monthwiseRevenue
     }
 
   }

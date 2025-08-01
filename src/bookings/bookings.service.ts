@@ -155,5 +155,17 @@ export class BookingsService {
       totalBookings: totalBookings
     }
 
+
   }
+    async findMonthWiseRevenue(){
+      const bookings = await this.bookingRepository
+  .createQueryBuilder('booking')
+  .select("TO_CHAR(DATE_TRUNC('month', booking.checkIndate), 'YYYY-MM')", 'month')
+  .addSelect('SUM(booking.amount)', 'totalAmount')
+  .groupBy("DATE_TRUNC('month', booking.checkIndate)")
+  .orderBy('month', 'ASC')
+  .getRawMany();
+  return bookings
+
+    }
 }
