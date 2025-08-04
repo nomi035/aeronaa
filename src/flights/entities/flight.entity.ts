@@ -1,5 +1,6 @@
 import { BaseEntity } from "base.entity";
-import { Column, Entity } from "typeorm";
+import { Column, Entity, OneToMany } from "typeorm";
+import { FlightSegment } from "./segment.entity";
 
 @Entity('Flights')
 export class Flight extends BaseEntity {
@@ -87,5 +88,9 @@ checkedBaggage:string
 
 @Column()
 cabbinBaggage:string;
+
+@OneToMany(()=> FlightSegment,(segment)=> segment.flight,{onDelete:'CASCADE'})
+segments:FlightSegment[]
+
 
 }

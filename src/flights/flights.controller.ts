@@ -12,6 +12,7 @@ import { FlightsService } from './flights.service';
 import { CreateFlightDto } from './dto/create-flight.dto';
 import { UpdateFlightDto } from './dto/update-flight.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { CreateSegmentDto } from './dto/create-segment.dto';
 
 @ApiTags('flights')
 @Controller('flights')
@@ -19,9 +20,24 @@ export class FlightsController {
   constructor(private readonly flightsService: FlightsService) {}
 
   @Post()
-  create(@Body() createFlightDto: CreateFlightDto) {
+  create(@Body() createFlightDto: CreateFlightDto
+        ) {
     return this.flightsService.create(createFlightDto);
   }
+
+  @Post('/create/segments')
+  async createSegments(@Body()createSegmentDto:CreateSegmentDto){
+    return this.flightsService.createSegment(createSegmentDto)
+
+  }
+
+  @Get('/find/segments')
+  async findFlightSegments(@Param('id')id:string)
+  {
+    return this.flightsService.findFlightSegment(+id)
+  }
+
+ 
 
   @Get()
   findAll(
