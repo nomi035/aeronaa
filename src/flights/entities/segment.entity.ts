@@ -3,73 +3,73 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 't
 import { Flight } from './flight.entity';
 
 export enum CabinClass {
-  ECONOMY = 'economy',
-  BUSINESS = 'business',
-  FIRST = 'first',
+    ECONOMY = 'economy',
+    BUSINESS = 'business',
+    FIRST = 'first',
 }
-export enum SegmentType{
-    OUTBOUND='outbound',
-    RETURN='return'
+export enum SegmentType {
+    OUTBOUND = 'outbound',
+    RETURN = 'return'
 }
 
 @Entity('segment')
-export class FlightSegment extends BaseEntity{
- 
+export class FlightSegment extends BaseEntity {
 
-  @Column()
-  flightNumber: string;
 
-  @Column()
-  departureAirport: string;
+    @Column()
+    flightNumber: string;
 
-  @Column()
-  arrivalAirport: string;
+    @Column()
+    departureAirport: string;
 
-  @Column()
-  departureTime: string;
+    @Column()
+    arrivalAirport: string;
 
-  @Column()
-  arrivalTime: string;
+    @Column()
+    departureTime: string;
 
-  @Column()
-  departurelocation: string;
+    @Column()
+    arrivalTime: string;
 
-  @Column()
-  arrivallocation: string;
+    @Column()
+    departurelocation: string;
 
-  @Column('int')
-  flightDuration: number;
+    @Column()
+    arrivallocation: string;
 
-  @Column('int', { nullable: true })
-  layoverDuration?: number;
+    @Column('int')
+    flightDuration: number;
 
-  @Column({ nullable: true })
-  aircraftType?: string;
+    @Column('int', { nullable: true })
+    layoverDuration?: number;
 
-  @Column({ nullable: true })
-  operatingCarrier?: string;
+    @Column({ nullable: true })
+    aircraftType?: string;
 
-  @Column({ nullable: true })
-  marketingCarrier?: string;
+    @Column({ nullable: true })
+    operatingCarrier?: string;
 
-  @Column()
-  baggageRecheckRequired: boolean;
+    @Column({ nullable: true })
+    marketingCarrier?: string;
 
-  @Column({
-    type: 'enum',
-    enum: CabinClass,
-  })
-  cabinClass: CabinClass;
+    @Column()
+    baggageRecheckRequired: boolean;
 
-  @Column({
-    type: 'enum',
-    enum: SegmentType,
-  })
-  type: SegmentType;
+    @Column({
+        type: 'enum',
+        enum: CabinClass,
+    })
+    cabinClass: CabinClass;
 
-  @ManyToOne(() => Flight, {
-      onDelete: 'CASCADE',
+    @Column({
+        type: 'enum',
+        enum: SegmentType,
+    })
+    type: SegmentType;
+
+    @ManyToOne(() => Flight, {
+        onDelete: 'CASCADE',
     })
     @JoinColumn()
-  flight:Flight 
+    flight: Flight
 }

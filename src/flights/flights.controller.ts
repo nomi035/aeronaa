@@ -13,6 +13,7 @@ import { CreateFlightDto } from './dto/create-flight.dto';
 import { UpdateFlightDto } from './dto/update-flight.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateSegmentDto } from './dto/create-segment.dto';
+import { UpdateSegmentDto } from './dto/update-segment.dto';
 
 @ApiTags('flights')
 @Controller('flights')
@@ -31,7 +32,19 @@ export class FlightsController {
 
   }
 
-  @Get('/find/segments')
+  @Patch('/create/segments/:id')
+  async updateSegments(@Body()createSegmentDto:UpdateSegmentDto,@Param('id')id:string){
+    return this.flightsService.updateSegment(+id,createSegmentDto)
+
+  }
+
+  @Delete('/create/segments/:id')
+  async deleteSegment(@Param('id')id:string){
+    return this.flightsService.deleteSegment(+id)
+  }
+
+
+  @Get('/find/segments/:id')
   async findFlightSegments(@Param('id')id:string)
   {
     return this.flightsService.findFlightSegment(+id)

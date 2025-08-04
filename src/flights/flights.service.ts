@@ -6,6 +6,7 @@ import { Flight } from './entities/flight.entity';
 import { Repository } from 'typeorm';
 import { CreateSegmentDto } from './dto/create-segment.dto';
 import { FlightSegment } from './entities/segment.entity';
+import { UpdateSegmentDto } from './dto/update-segment.dto';
 
 @Injectable()
 export class FlightsService {
@@ -20,14 +21,26 @@ export class FlightsService {
   }
 
   createSegment(createSegmentDto:CreateSegmentDto){
-    return this.segmentRepository.create(createSegmentDto)
+    return this.segmentRepository.save(createSegmentDto)
   }
+
+  updateSegment(id,updateSegmentDto:UpdateSegmentDto){
+    return this.segmentRepository.update(id,updateSegmentDto)
+  }
+
+  deleteSegment(id){
+    return this.segmentRepository.delete(id)
+  }
+
 
   findFlightSegment(flightId:number){
     return this.segmentRepository.find({
       where:{flight:{
         id:flightId
-      }}
+      }
+      
+    },
+    relations:{flight:true}
     })
   }
 
@@ -40,7 +53,7 @@ export class FlightsService {
         returnDate,
         flightClass,
       },
-      relations:['segments']
+      relations:{segments:true}
     });
   }
 
