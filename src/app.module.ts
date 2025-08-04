@@ -12,6 +12,7 @@ import { ReviewsModule } from './reviews/reviews.module';
 import { FileUploadModule } from './file-upload/file-upload.module';
 import { StripeModule } from './stripe/stripe.module';
 import { FlightsModule } from './flights/flights.module';
+import { FlightbookingModule } from './flightbooking/flightbooking.module';
 
 
 @Module({
@@ -39,6 +40,7 @@ import { FlightsModule } from './flights/flights.module';
     FileUploadModule,
     StripeModule,
     FlightsModule,
+    FlightbookingModule,
     ],
   controllers: [AppController],
   providers: [AppService],

@@ -39,7 +39,8 @@ export class FlightsService {
         departureDate,
         returnDate,
         flightClass,
-      }
+      },
+      relations:['segments']
     });
   }
 
