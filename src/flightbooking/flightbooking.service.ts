@@ -19,7 +19,8 @@ private readonly flightBookingRepository:Repository<Flightbooking>){
     return this.flightBookingRepository.find({
       order:{
        createdAt :'DESC'
-      }
+      },
+      relations:{flight:true}
     })
   }
 

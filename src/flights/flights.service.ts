@@ -62,6 +62,7 @@ export class FlightsService {
       where: {
         id,
       },
+      relations:{segments:true}
     });
   }
 
