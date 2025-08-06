@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger"
 import { Flight } from "src/flights/entities/flight.entity"
+import { User } from "src/user/entities/user.entity"
 
 export class CreateFlightbookingDto {
     @ApiProperty()
@@ -37,5 +38,7 @@ export class CreateFlightbookingDto {
 
     @ApiProperty()
     flight:Flight
+
+    bookingFor:User
 
 }

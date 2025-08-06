@@ -1,17 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { FlightbookingService } from './flightbooking.service';
 import { CreateFlightbookingDto } from './dto/create-flightbooking.dto';
 import { UpdateFlightbookingDto } from './dto/update-flightbooking.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/guard';
+import { currentUser } from 'src/decorator/currentuser';
 
 @ApiTags('flight-bookings')
 @Controller('flightbooking')
 export class FlightbookingController {
   constructor(private readonly flightbookingService: FlightbookingService) {}
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Body() createFlightbookingDto: CreateFlightbookingDto) {
-    return this.flightbookingService.create(createFlightbookingDto);
+  create(@Body() createFlightbookingDto: CreateFlightbookingDto, @currentUser() user: any) {
+    return this.flightbookingService.create({...createFlightbookingDto,bookingFor:user.userId});
   }
 
   @Get()

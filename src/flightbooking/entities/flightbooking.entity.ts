@@ -1,5 +1,6 @@
 import { BaseEntity } from "base.entity";
 import { Flight } from "src/flights/entities/flight.entity";
+import { User } from "src/user/entities/user.entity";
 import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
 @Entity('flight-booking')
@@ -42,6 +43,10 @@ export class Flightbooking extends BaseEntity{
     @ManyToOne(()=>(Flight),{onDelete:'CASCADE'})
     @JoinColumn()
     flight:Flight
+
+    @ManyToOne(()=>(User),{onDelete:'CASCADE'})
+    @JoinColumn()
+    bookingFor:User
 
 
 
