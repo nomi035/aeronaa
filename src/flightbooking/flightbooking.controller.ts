@@ -1,10 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } from '@nestjs/common';
 import { FlightbookingService } from './flightbooking.service';
 import { CreateFlightbookingDto } from './dto/create-flightbooking.dto';
 import { UpdateFlightbookingDto } from './dto/update-flightbooking.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guard';
 import { currentUser } from 'src/decorator/currentuser';
+import {
+    Status
+} from "./entities/flightbooking.entity"
+
 
 @ApiTags('flight-bookings')
 @Controller('flightbooking')
@@ -26,9 +30,25 @@ export class FlightbookingController {
      return this.flightbookingService.getUserFlightBookings(user.userId)
   }
 
+   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Get('/user/past/')
+   getUserPastBookings(@currentUser() user:any)
+   {
+     return this.flightbookingService.getUserPastBookings(user.userId)
+  }
+
+   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Get('/user/upcoming/')
+   getUserUpComingBookings(@currentUser() user:any)
+   {
+     return this.flightbookingService.getUserUpcomingBookings(user.userId)
+  }
+
   @Get()
-  findAll() {
-    return this.flightbookingService.findAll();
+  findAll(@Query('status')status:Status) {
+    return this.flightbookingService.findAll(status);
   }
 
   @Get(':id')

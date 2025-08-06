@@ -3,6 +3,12 @@ import { Flight } from "src/flights/entities/flight.entity";
 import { User } from "src/user/entities/user.entity";
 import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
+
+export enum Status{
+    CONFIRMED='confirmed',
+    RESERVED='RESERVED'
+}
+
 @Entity('flight-booking')
 export class Flightbooking extends BaseEntity{
     @Column()
@@ -39,6 +45,12 @@ export class Flightbooking extends BaseEntity{
 
     @Column()
     nationality:string
+
+    @Column({
+        default:Status.RESERVED
+    })
+    bookingStatus:Status
+
 
     @ManyToOne(()=>(Flight),{onDelete:'CASCADE'})
     @JoinColumn()
