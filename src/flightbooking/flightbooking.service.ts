@@ -23,7 +23,7 @@ private readonly flightBookingRepository:Repository<Flightbooking>){
         }
         
       },
-      relations:['bookingFor,flight']
+      relations:['bookingFor','flight']
     })
 
   }
@@ -36,7 +36,7 @@ private readonly flightBookingRepository:Repository<Flightbooking>){
           arrivalDate:MoreThan(new Date(Date.now() - 86400000)),
         }
       },
-      relations:['bookingFor,flight'],
+      relations:['bookingFor','flight'],
       order:{
         flight:{
           arrivalDate:'ASC'
@@ -58,7 +58,7 @@ private readonly flightBookingRepository:Repository<Flightbooking>){
           arrivalDate:LessThan(new Date(Date.now() - 86400000)),
         }
       },
-       relations:['bookingFor,flight'],
+       relations:['bookingFor','flight'],
       order:{
         flight:{
           arrivalDate:'DESC'
