@@ -18,6 +18,14 @@ export class FlightbookingController {
     return this.flightbookingService.create({...createFlightbookingDto,bookingFor:user.userId});
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Get('/user/based/')
+   getUserFlighBookings(@currentUser() user:any)
+   {
+     return this.flightbookingService.getUserFlightBookings(user.userId)
+  }
+
   @Get()
   findAll() {
     return this.flightbookingService.findAll();

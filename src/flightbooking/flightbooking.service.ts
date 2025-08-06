@@ -15,6 +15,22 @@ private readonly flightBookingRepository:Repository<Flightbooking>){
     return this.flightBookingRepository.save(createFlightbookingDto)
   }
 
+  getUserFlightBookings(id:number){
+    return this.flightBookingRepository.findOne({
+      where:{
+        bookingFor:{
+          id
+        }
+        
+      },
+      relations:{
+        bookingFor:true
+        
+      }
+    })
+
+  }
+
   findAll() {
     return this.flightBookingRepository.find({
       order:{
