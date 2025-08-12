@@ -9,7 +9,6 @@ import { authSwaggerSchema } from './auth.swagger-schema';
 @ApiBearerAuth()
 export class AuthController {
 
-
   constructor(private readonly authService: AuthService) {}
   @ApiBody(authSwaggerSchema.loginBody)
   @Post('login')

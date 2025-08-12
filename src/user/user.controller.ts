@@ -41,7 +41,12 @@ export class UserController {
         },
         verificationCode
       )
-        
+
+    await this.emailService.sendSms(
+      createUserDto.phone,
+      `Your verification code is ${verificationCode}`
+    );
+
   }}
 
 

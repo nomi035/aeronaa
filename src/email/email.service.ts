@@ -4,12 +4,21 @@ import { UpdateEmailDto } from './dto/update-email.dto';
 import * as sgMail from '@sendgrid/mail';
 import * as ejs from 'ejs';
 import * as path from 'path';
+import * as twilio from 'twilio';
+
 
 @Injectable()
 export class EmailService {
 
+    private twilioClient: twilio.Twilio;
+ 
   constructor(){
     sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
+     this.twilioClient = twilio(
+      process.env.TWILIO_ACCOUNT_SID,
+      process.env.TWILIO_AUTH_TOKEN
+    );
+
   }
 
   async sendMail(sendMailDto: CreateEmailDto, verificationCode: string) {
@@ -38,6 +47,20 @@ export class EmailService {
     } catch (error) {
       console.error('SendGrid Error:', error);
       throw new Error('Failed to send email');
+    }
+  }
+
+  async sendSms(to: string, body: string) {
+    try {
+      const result = await this.twilioClient.messages.create({
+        body,
+        from: process.env.TWILIO_PHONE_NUMBER,
+        to:to, 
+      });
+      return { message: 'SMS sent successfully', sid: result.sid };
+    } catch (error) {
+      console.error('Twilio Error:', error);
+      throw new Error('Failed to send SMS');
     }
   }
 
