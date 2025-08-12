@@ -12,4 +12,9 @@ export class CreateUserDto {
   
   @IsOptional()
   role: Role;
+
+  isEmailVerified: boolean;
+
+  verificationCode: string;
+
 }

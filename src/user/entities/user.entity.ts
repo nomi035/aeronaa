@@ -13,6 +13,12 @@ export class User extends BaseEntity {
   phone: string;
   @Column({nullable:true})
   role: Role;
+
+  @Column({default:false,nullable:true })
+  isEmailVerified: boolean;
+
+  @Column({ nullable: true })
+  verificationCode: string;
 }
 
 export enum Role {

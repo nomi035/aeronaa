@@ -13,7 +13,7 @@ import { FileUploadModule } from './file-upload/file-upload.module';
 import { StripeModule } from './stripe/stripe.module';
 import { FlightsModule } from './flights/flights.module';
 import { FlightbookingModule } from './flightbooking/flightbooking.module';
-import { EmailsModule } from './emails/emails.module';
+import { EmailModule } from './email/email.module';
 
 
 @Module({
@@ -42,7 +42,7 @@ import { EmailsModule } from './emails/emails.module';
     StripeModule,
     FlightsModule,
     FlightbookingModule,
-    EmailsModule,
+    EmailModule,
     ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hotel Booking Confirmed - Aerona</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333;
+      padding: 40px 20px;
+      margin: 0;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+    .container {
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto;
+      background-color: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      position: relative;
+    }
+    .container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #e74c3c, #f39c12, #f1c40f);
+    }
+    .header {
+      background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+      padding: 40px 30px;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    .booking-icon {
+      font-size: 60px;
+      margin-bottom: 20px;
+      display: block;
+    }
+    .confirmation-banner {
+      background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .body {
+      padding: 40px;
+      background-color: #f8f9fa;
+    }
+    .booking-details {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+    .hotel-header {
+      background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+      color: white;
+      padding: 25px;
+      text-align: center;
+    }
+    .hotel-name {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 0 0 10px 0;
+    }
+    .hotel-rating {
+      font-size: 20px;
+      margin: 0;
+    }
+    .details-grid {
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .detail-item {
+      padding: 15px;
+      border-left: 4px solid #3498db;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+    .detail-label {
+      font-size: 12px;
+      color: #7f8c8d;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    .detail-value {
+      font-size: 16px;
+      color: #2c3e50;
+      font-weight: 600;
+    }
+    .price-summary {
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #ecf0f1;
+    }
+    .price-row:last-child {
+      border-bottom: 2px solid #3498db;
+      font-weight: 700;
+      font-size: 18px;
+      color: #2c3e50;
+    }
+    .important-info {
+      background: #fff3cd;
+      border: 1px solid #ffeaa7;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+    .important-info h3 {
+      color: #856404;
+      margin: 0 0 15px 0;
+    }
+    .cta-section {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .cta-button {
+      display: inline-block;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 15px 30px;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+      margin: 0 10px 10px 0;
+    }
+    .footer {
+      background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+      padding: 25px;
+      text-align: center;
+      font-size: 14px;
+      color: #bdc3c7;
+    }
+    @media (max-width: 600px) {
+      .details-grid {
+        grid-template-columns: 1fr;
+      }
+      .cta-button {
+        display: block;
+        margin: 10px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <span class="booking-icon">🏨</span>
+      <h1>Aerona Travel</h1>
+    </div>
+    
+    <div class="confirmation-banner">
+      Booking Confirmed! Confirmation #<%= bookingId %>
+    </div>
+    
+    <div class="body">
+      <div class="booking-details">
+        <div class="hotel-header">
+          <h2 class="hotel-name"><%= hotelName %></h2>
+          <p class="hotel-rating"><%= hotelRating %></p>
+        </div>
+        
+        <div class="details-grid">
+          <div class="detail-item">
+            <div class="detail-label">Check-in</div>
+            <div class="detail-value"><%= checkInDate %></div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Check-out</div>
+            <div class="detail-value"><%= checkOutDate %></div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Guests</div>
+            <div class="detail-value"><%= guestCount %> Guests</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Room Type</div>
+            <div class="detail-value"><%= roomType %></div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Nights</div>
+            <div class="detail-value"><%= numberOfNights %> Nights</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Guest Name</div>
+            <div class="detail-value"><%= guestName %></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="price-summary">
+        <h3 style="margin: 0 0 20px 0; color: #2c3e50;">Price Summary</h3>
+        <div class="price-row">
+          <span>Room Rate (per night)</span>
+          <span>$<%= roomRate %></span>
+        </div>
+        <div class="price-row">
+          <span>Taxes & Fees</span>
+          <span>$<%= taxesAndFees %></span>
+        </div>
+        <div class="price-row">
+          <span>Total Amount</span>
+          <span>$<%= totalAmount %></span>
+        </div>
+      </div>
+
+      <div class="important-info">
+        <h3>📋 Important Information</h3>
+        <ul style="margin: 0; padding-left: 20px;">
+          <li>Please bring a valid photo ID and credit card for check-in</li>
+          <li>Check-in time: <%= checkInTime %> | Check-out time: <%= checkOutTime %></li>
+          <li>Cancellation policy: <%= cancellationPolicy %></li>
+        </ul>
+      </div>
+
+      <div class="cta-section">
+        <a href="<%= viewBookingUrl %>" class="cta-button">View Booking Details</a>
+        <a href="<%= modifyBookingUrl %>" class="cta-button">Modify Booking</a>
+      </div>
+    </div>
+    
+    <div class="footer">
+      &copy; <%= year %> Aerona Travel. All rights reserved.<br>
+      Need help? Contact us at support@aerona.com or call +1-800-AERONA
+    </div>
+  </div>
+</body>
+</html>
