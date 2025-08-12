@@ -47,4 +47,9 @@ export class CreateFlightbookingDto {
     @ApiProperty()
     bookingStatus:Status
 
+    @ApiProperty({
+        required:false
+    })
+    pnrNumber?:string
+
 }

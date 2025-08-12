@@ -47,6 +47,11 @@ export class Flightbooking extends BaseEntity{
     nationality:string
 
     @Column({
+      default:null  
+    })
+    pnrNumber:string
+
+    @Column({
         default:Status.RESERVED
     })
     bookingStatus:Status
